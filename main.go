@@ -22,6 +22,10 @@ func main() {
 		"Removes a todo from the list using its ID",
 	))
 
+	if err := todo.SaveTodos(todoList.Todos); err != nil {
+		log.Fatal(err)
+	}
+
 	todoList.Display()
 
 	cmd.Execute()

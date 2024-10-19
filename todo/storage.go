@@ -48,3 +48,18 @@ func ReadTodosFile() ([]Todo, error) {
 
 	return todos, nil
 }
+
+// Save a slice of todo in the file.
+// Overwrites all the todos already present in the file.
+func SaveTodos(todos []Todo) error {
+	todosB, err := json.MarshalIndent(todos, "", "    ")
+	if err != nil {
+		return fmt.Errorf("failed to marshal todos: %w", err)
+	}
+
+	if err := os.WriteFile("todos.json", todosB, 0666); err != nil {
+		return fmt.Errorf("failed to write todos to file: %w", err)
+	}
+
+	return nil
+}
