@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 
 	"github.com/matheodrd/todogo/cmd"
@@ -18,12 +17,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	for _, todo := range todoList.Todos {
-		fmt.Printf(
-			"Tâche n°%d: %s | %s | Statut: %s\n",
-			todo.ID, todo.Title, todo.Description, todo.Status.String(),
-		)
-	}
+	todoList.Display()
 
 	cmd.Execute()
 }

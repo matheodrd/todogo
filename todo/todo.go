@@ -36,3 +36,12 @@ func NewTodoList() (*TodoList, error) {
 		Todos: todos,
 	}, nil
 }
+
+func (tl *TodoList) Display() {
+	for _, todo := range tl.Todos {
+		fmt.Printf(
+			"Tâche n°%d: %s | %s | Statut: %s\n",
+			todo.ID, todo.Title, todo.Description, todo.Status.String(),
+		)
+	}
+}
