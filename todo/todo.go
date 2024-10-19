@@ -3,6 +3,7 @@
 import (
 	"fmt"
 	"math/rand/v2"
+	"slices"
 )
 
 type status int
@@ -60,4 +61,14 @@ func (tl *TodoList) Display() {
 
 func (tl *TodoList) AddTodo(t Todo) {
 	tl.Todos = append(tl.Todos, t)
+}
+
+func (tl *TodoList) RemoveTodo(id int) error {
+	for idx, todo := range tl.Todos {
+		if todo.ID == id {
+			tl.Todos = slices.Delete(tl.Todos, idx, idx+1)
+			return nil
+		}
+	}
+	return fmt.Errorf("unable to remove todo: cannot find todo with id %d", id)
 }
