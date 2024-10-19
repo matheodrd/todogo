@@ -10,6 +10,13 @@ import (
 func main() {
 	todo.InitTodosFile()
 	todos := todo.ReadTodosFile()
-	fmt.Println(todos[0].Status)
+
+	for _, todo := range todos {
+		fmt.Printf(
+			"Tâche n°%d: %s | %s | Statut: %s\n",
+			todo.ID, todo.Title, todo.Description, todo.Status.String(),
+		)
+	}
+
 	cmd.Execute()
 }
