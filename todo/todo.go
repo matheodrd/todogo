@@ -1,6 +1,9 @@
 ﻿package todo
 
-import "fmt"
+import (
+	"fmt"
+	"math/rand/v2"
+)
 
 type status int
 
@@ -20,6 +23,15 @@ type Todo struct {
 	Description string `json:"description"`
 	Status      status `json:"status"`
 	// CreatedAt   time.Time `json:"created_at"`
+}
+
+func NewTodo(title, description string) Todo {
+	return Todo{
+		ID:          rand.Int(), // TODO: Replace this crap by a true unique ID i.e. UUID
+		Title:       title,
+		Description: description,
+		Status:      todo,
+	}
 }
 
 type TodoList struct {
@@ -44,4 +56,8 @@ func (tl *TodoList) Display() {
 			todo.ID, todo.Title, todo.Description, todo.Status.String(),
 		)
 	}
+}
+
+func (tl *TodoList) AddTodo(t Todo) {
+	tl.Todos = append(tl.Todos, t)
 }

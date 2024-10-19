@@ -17,6 +17,11 @@ func main() {
 		log.Fatal(err)
 	}
 
+	todoList.AddTodo(todo.NewTodo(
+		"Write a RemoveTodo method",
+		"Removes a todo from the list using its ID",
+	))
+
 	todoList.Display()
 
 	cmd.Execute()
