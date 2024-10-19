@@ -13,12 +13,12 @@ func main() {
 		log.Fatalf("Error during initialization: %v", err)
 	}
 
-	todos, err := todo.ReadTodosFile()
+	todoList, err := todo.NewTodoList()
 	if err != nil {
-		log.Fatalf("Error reading todos: %v", err)
+		log.Fatal(err)
 	}
 
-	for _, todo := range todos {
+	for _, todo := range todoList.Todos {
 		fmt.Printf(
 			"Tâche n°%d: %s | %s | Statut: %s\n",
 			todo.ID, todo.Title, todo.Description, todo.Status.String(),

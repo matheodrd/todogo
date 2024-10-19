@@ -1,5 +1,7 @@
 ﻿package todo
 
+import "fmt"
+
 type status int
 
 const (
@@ -18,4 +20,19 @@ type Todo struct {
 	Description string `json:"description"`
 	Status      status `json:"status"`
 	// CreatedAt   time.Time `json:"created_at"`
+}
+
+type TodoList struct {
+	Todos []Todo
+}
+
+func NewTodoList() (*TodoList, error) {
+	todos, err := ReadTodosFile()
+	if err != nil {
+		return nil, fmt.Errorf("error while reading todos from file: %w", err)
+	}
+
+	return &TodoList{
+		Todos: todos,
+	}, nil
 }
