@@ -2,14 +2,21 @@ package main
 
 import (
 	"fmt"
+	"log"
 
 	"github.com/matheodrd/todogo/cmd"
 	"github.com/matheodrd/todogo/todo"
 )
 
 func main() {
-	todo.InitTodosFile()
-	todos := todo.ReadTodosFile()
+	if err := todo.InitTodosFile(); err != nil {
+		log.Fatalf("Error during initialization: %v", err)
+	}
+
+	todos, err := todo.ReadTodosFile()
+	if err != nil {
+		log.Fatalf("Error reading todos: %v", err)
+	}
 
 	for _, todo := range todos {
 		fmt.Printf(
