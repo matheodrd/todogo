@@ -2,8 +2,9 @@
 
 import (
 	"fmt"
-	"math/rand/v2"
 	"slices"
+
+	"github.com/google/uuid"
 )
 
 type status int
@@ -19,16 +20,16 @@ func (s status) String() string {
 }
 
 type Todo struct {
-	ID          int    `json:"id"`
-	Title       string `json:"title"`
-	Description string `json:"description"`
-	Status      status `json:"status"`
+	ID          uuid.UUID `json:"id"`
+	Title       string    `json:"title"`
+	Description string    `json:"description"`
+	Status      status    `json:"status"`
 	// CreatedAt   time.Time `json:"created_at"`
 }
 
 func NewTodo(title, description string) Todo {
 	return Todo{
-		ID:          rand.Int(), // TODO: Replace this crap by a true unique ID i.e. UUID
+		ID:          uuid.New(),
 		Title:       title,
 		Description: description,
 		Status:      todo,
@@ -67,7 +68,7 @@ func (tl *TodoList) AddTodo(t Todo) {
 	tl.Todos = append(tl.Todos, t)
 }
 
-func (tl *TodoList) RemoveTodo(id int) error {
+func (tl *TodoList) RemoveTodo(id uuid.UUID) error {
 	for idx, todo := range tl.Todos {
 		if todo.ID == id {
 			tl.Todos = slices.Delete(tl.Todos, idx, idx+1)
@@ -77,7 +78,7 @@ func (tl *TodoList) RemoveTodo(id int) error {
 	return fmt.Errorf("unable to remove todo: cannot find todo with id %d", id)
 }
 
-func (tl *TodoList) UpdateTodoStatus(id int, newStatus status) error {
+func (tl *TodoList) UpdateTodoStatus(id uuid.UUID, newStatus status) error {
 	for idx, todo := range tl.Todos {
 		if todo.ID == id {
 			t := &tl.Todos[idx]
