@@ -18,19 +18,6 @@ func main() {
 		log.Fatal(err)
 	}
 
-	todoList.AddTodo(todo.NewTodo(
-		"Write a RemoveTodo method",
-		"Removes a todo from the list using its ID",
-	))
-
-	if err := todoList.RemoveTodo(2); err != nil {
-		log.Fatal(err)
-	}
-
-	if err := todoList.UpdateTodoStatus(0, 2); err != nil {
-		log.Fatal(err)
-	}
-
 	if err := todo.SaveTodos(todoList.Todos); err != nil {
 		log.Fatal(err)
 	}

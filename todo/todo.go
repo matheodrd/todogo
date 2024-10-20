@@ -36,6 +36,15 @@ func NewTodo(title, description string) Todo {
 	}
 }
 
+func NewTodoWithID(id uuid.UUID, title, description string) Todo {
+	return Todo{
+		ID:          id,
+		Title:       title,
+		Description: description,
+		Status:      todo,
+	}
+}
+
 func (t *Todo) SetStatus(newStatus status) {
 	t.Status = newStatus
 }
