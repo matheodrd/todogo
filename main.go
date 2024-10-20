@@ -27,6 +27,10 @@ func main() {
 		log.Fatal(err)
 	}
 
+	if err := todoList.UpdateTodoStatus(0, 2); err != nil {
+		log.Fatal(err)
+	}
+
 	if err := todo.SaveTodos(todoList.Todos); err != nil {
 		log.Fatal(err)
 	}

@@ -35,6 +35,10 @@ func NewTodo(title, description string) Todo {
 	}
 }
 
+func (t *Todo) SetStatus(newStatus status) {
+	t.Status = newStatus
+}
+
 type TodoList struct {
 	Todos []Todo
 }
@@ -71,4 +75,15 @@ func (tl *TodoList) RemoveTodo(id int) error {
 		}
 	}
 	return fmt.Errorf("unable to remove todo: cannot find todo with id %d", id)
+}
+
+func (tl *TodoList) UpdateTodoStatus(id int, newStatus status) error {
+	for idx, todo := range tl.Todos {
+		if todo.ID == id {
+			t := &tl.Todos[idx]
+			t.SetStatus(newStatus)
+			return nil
+		}
+	}
+	return fmt.Errorf("unable to update todo status: cannot find todo with id %d", id)
 }
