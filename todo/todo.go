@@ -54,7 +54,7 @@ func (t Todo) String() string {
 }
 
 type TodoList struct {
-	Todos []Todo
+	Todos []*Todo
 }
 
 func NewTodoList() (*TodoList, error) {
@@ -63,8 +63,14 @@ func NewTodoList() (*TodoList, error) {
 		return nil, fmt.Errorf("error while reading todos from file: %w", err)
 	}
 
+	// must convert todos read from file to a slice of pointers
+	todoPtrs := make([]*Todo, len(todos))
+	for i := range todos {
+		todoPtrs[i] = &todos[i]
+	}
+
 	return &TodoList{
-		Todos: todos,
+		Todos: todoPtrs,
 	}, nil
 }
 
@@ -75,7 +81,7 @@ func (tl *TodoList) Display() {
 }
 
 func (tl *TodoList) AddTodo(t Todo) {
-	tl.Todos = append(tl.Todos, t)
+	tl.Todos = append(tl.Todos, &t)
 }
 
 func (tl *TodoList) RemoveTodo(id uuid.UUID) error {
@@ -89,10 +95,9 @@ func (tl *TodoList) RemoveTodo(id uuid.UUID) error {
 }
 
 func (tl *TodoList) UpdateTodoStatus(id uuid.UUID, newStatus status) error {
-	for idx, todo := range tl.Todos {
+	for _, todo := range tl.Todos {
 		if todo.ID == id {
-			t := &tl.Todos[idx]
-			t.SetStatus(newStatus)
+			todo.SetStatus(newStatus)
 			return nil
 		}
 	}
