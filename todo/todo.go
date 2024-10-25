@@ -92,6 +92,15 @@ func (tl *TodoList) AddTodo(t Todo) {
 	tl.Todos = append(tl.Todos, &t)
 }
 
+func (tl *TodoList) FindTodo(id uuid.UUID) (*Todo, error) {
+	for _, todo := range tl.Todos {
+		if todo.ID == id {
+			return todo, nil
+		}
+	}
+	return nil, fmt.Errorf("cannot find todo with id %s", id)
+}
+
 func (tl *TodoList) RemoveTodo(id uuid.UUID) error {
 	for idx, todo := range tl.Todos {
 		if todo.ID == id {
@@ -103,31 +112,28 @@ func (tl *TodoList) RemoveTodo(id uuid.UUID) error {
 }
 
 func (tl *TodoList) UpdateTodoStatus(id uuid.UUID, newStatus status) error {
-	for _, todo := range tl.Todos {
-		if todo.ID == id {
-			todo.SetStatus(newStatus)
-			return nil
-		}
+	todo, err := tl.FindTodo(id)
+	if err != nil {
+		return fmt.Errorf("unable to update todo status: %w", err)
 	}
-	return fmt.Errorf("unable to update todo status: cannot find todo with id %s", id)
+	todo.SetStatus(newStatus)
+	return nil
 }
 
 func (tl *TodoList) UpdateTodoTitle(id uuid.UUID, newTitle string) error {
-	for _, todo := range tl.Todos {
-		if todo.ID == id {
-			todo.SetTitle(newTitle)
-			return nil
-		}
+	todo, err := tl.FindTodo(id)
+	if err != nil {
+		return fmt.Errorf("unable to update todo title: %w", err)
 	}
-	return fmt.Errorf("unable to update todo status: cannot find todo with id %s", id)
+	todo.SetTitle(newTitle)
+	return nil
 }
 
 func (tl *TodoList) UpdateTodoDescription(id uuid.UUID, newDescription string) error {
-	for _, todo := range tl.Todos {
-		if todo.ID == id {
-			todo.SetDescription(newDescription)
-			return nil
-		}
+	todo, err := tl.FindTodo(id)
+	if err != nil {
+		return fmt.Errorf("unable to update todo description: %w", err)
 	}
-	return fmt.Errorf("unable to update todo status: cannot find todo with id %s", id)
+	todo.SetDescription(newDescription)
+	return nil
 }
