@@ -49,6 +49,10 @@ func (t *Todo) SetStatus(newStatus status) {
 	t.Status = newStatus
 }
 
+func (t Todo) String() string {
+	return fmt.Sprintf("%s | %s | %s | %s\n", t.ID, t.Title, t.Description, t.Status.String())
+}
+
 type TodoList struct {
 	Todos []Todo
 }
@@ -66,10 +70,7 @@ func NewTodoList() (*TodoList, error) {
 
 func (tl *TodoList) Display() {
 	for _, todo := range tl.Todos {
-		fmt.Printf(
-			"Tâche n°%s: %s | %s | Statut: %s\n",
-			todo.ID, todo.Title, todo.Description, todo.Status.String(),
-		)
+		fmt.Print(todo)
 	}
 }
 
