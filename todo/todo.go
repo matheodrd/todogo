@@ -101,14 +101,14 @@ func (tl *TodoList) FindTodo(id uuid.UUID) (*Todo, error) {
 	return nil, fmt.Errorf("cannot find todo with id %s", id)
 }
 
-func (tl *TodoList) RemoveTodo(id uuid.UUID) error {
+func (tl *TodoList) RemoveTodo(id uuid.UUID) (string, error) {
 	for idx, todo := range tl.Todos {
 		if todo.ID == id {
 			tl.Todos = slices.Delete(tl.Todos, idx, idx+1)
-			return nil
+			return todo.Title, nil
 		}
 	}
-	return fmt.Errorf("unable to remove todo: cannot find todo with id %s", id)
+	return "", fmt.Errorf("unable to remove todo: cannot find todo with id %s", id)
 }
 
 func (tl *TodoList) UpdateTodoStatus(id uuid.UUID, newStatus status) error {

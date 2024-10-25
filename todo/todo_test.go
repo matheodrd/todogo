@@ -29,7 +29,7 @@ func TestRemoveTodo(t *testing.T) {
 	todo := NewTodoWithID(id, "Test task to remove", "Remove this task")
 	tl.AddTodo(todo)
 
-	if err := tl.RemoveTodo(id); err != nil {
+	if _, err := tl.RemoveTodo(id); err != nil {
 		t.Fatalf("RemoveTodo returned an error: %v", err)
 	}
 
