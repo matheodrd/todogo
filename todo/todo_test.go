@@ -56,9 +56,48 @@ func TestUpdateTodoStatus(t *testing.T) {
 		if err := tl.UpdateTodoStatus(id, wantStatusCode); err != nil {
 			t.Fatalf("UpdateTodoStatus returned an error: %v", err)
 		}
+
 		gotStatusCode := tl.Todos[0].Status // TODO: Make the test more robust with a GetTodo method ??
 		if gotStatusCode != wantStatusCode {
 			t.Errorf("expected %v status code, got %v", wantStatusCode, gotStatusCode)
 		}
+	}
+}
+
+func TestUpdateTodoTitle(t *testing.T) {
+	tl := TodoList{}
+
+	id := uuid.New()
+	todo := NewTodoWithID(id, "Test task", "Update my status")
+	tl.AddTodo(todo)
+
+	wantTitle := "My new title"
+
+	if err := tl.UpdateTodoTitle(id, wantTitle); err != nil {
+		t.Fatalf("UpdateTodoTitle returned an error: %v", err)
+	}
+
+	gotTitle := tl.Todos[0].Title
+	if gotTitle != wantTitle {
+		t.Errorf("expected %s title, got %s", wantTitle, gotTitle)
+	}
+}
+
+func TestUpdateTodoDescription(t *testing.T) {
+	tl := TodoList{}
+
+	id := uuid.New()
+	todo := NewTodoWithID(id, "Test task", "Update my status")
+	tl.AddTodo(todo)
+
+	wantDescription := "My new description"
+
+	if err := tl.UpdateTodoDescription(id, wantDescription); err != nil {
+		t.Fatalf("UpdateTodoDescription returned an error: %v", err)
+	}
+
+	gotDescription := tl.Todos[0].Description
+	if gotDescription != wantDescription {
+		t.Errorf("expected %s description, got %s", wantDescription, gotDescription)
 	}
 }

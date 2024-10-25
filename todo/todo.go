@@ -49,6 +49,14 @@ func (t *Todo) SetStatus(newStatus status) {
 	t.Status = newStatus
 }
 
+func (t *Todo) SetTitle(newTitle string) {
+	t.Title = newTitle
+}
+
+func (t *Todo) SetDescription(newDescription string) {
+	t.Description = newDescription
+}
+
 func (t Todo) String() string {
 	return fmt.Sprintf("%s | %s | %s | %s\n", t.ID, t.Title, t.Description, t.Status.String())
 }
@@ -98,6 +106,26 @@ func (tl *TodoList) UpdateTodoStatus(id uuid.UUID, newStatus status) error {
 	for _, todo := range tl.Todos {
 		if todo.ID == id {
 			todo.SetStatus(newStatus)
+			return nil
+		}
+	}
+	return fmt.Errorf("unable to update todo status: cannot find todo with id %s", id)
+}
+
+func (tl *TodoList) UpdateTodoTitle(id uuid.UUID, newTitle string) error {
+	for _, todo := range tl.Todos {
+		if todo.ID == id {
+			todo.SetTitle(newTitle)
+			return nil
+		}
+	}
+	return fmt.Errorf("unable to update todo status: cannot find todo with id %s", id)
+}
+
+func (tl *TodoList) UpdateTodoDescription(id uuid.UUID, newDescription string) error {
+	for _, todo := range tl.Todos {
+		if todo.ID == id {
+			todo.SetDescription(newDescription)
 			return nil
 		}
 	}
