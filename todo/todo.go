@@ -67,7 +67,7 @@ func NewTodoList() (*TodoList, error) {
 func (tl *TodoList) Display() {
 	for _, todo := range tl.Todos {
 		fmt.Printf(
-			"Tâche n°%d: %s | %s | Statut: %s\n",
+			"Tâche n°%s: %s | %s | Statut: %s\n",
 			todo.ID, todo.Title, todo.Description, todo.Status.String(),
 		)
 	}
@@ -84,7 +84,7 @@ func (tl *TodoList) RemoveTodo(id uuid.UUID) error {
 			return nil
 		}
 	}
-	return fmt.Errorf("unable to remove todo: cannot find todo with id %d", id)
+	return fmt.Errorf("unable to remove todo: cannot find todo with id %s", id)
 }
 
 func (tl *TodoList) UpdateTodoStatus(id uuid.UUID, newStatus status) error {
@@ -95,5 +95,5 @@ func (tl *TodoList) UpdateTodoStatus(id uuid.UUID, newStatus status) error {
 			return nil
 		}
 	}
-	return fmt.Errorf("unable to update todo status: cannot find todo with id %d", id)
+	return fmt.Errorf("unable to update todo status: cannot find todo with id %s", id)
 }
