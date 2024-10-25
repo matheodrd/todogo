@@ -58,7 +58,7 @@ func (t *Todo) SetDescription(newDescription string) {
 }
 
 func (t Todo) String() string {
-	return fmt.Sprintf("%s | %s | %s | %s\n", t.ID, t.Title, t.Description, t.Status.String())
+	return fmt.Sprintf("%s | %s | %s | %s", t.ID, t.Title, t.Description, t.Status.String())
 }
 
 type TodoList struct {
