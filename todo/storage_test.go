@@ -42,7 +42,7 @@ func TestInitTodosFile(t *testing.T) {
 func TestSaveTodos(t *testing.T) {
 	tempFilePath := setupTestFilePath(t)
 
-	todos := []Todo{
+	todos := []*Todo{
 		{ID: uuid.New(), Title: "First todo", Description: "First description", Status: 0},
 		{ID: uuid.New(), Title: "Second todo", Description: "Second description", Status: 2},
 	}
@@ -78,7 +78,7 @@ func TestSaveTodos(t *testing.T) {
 func TestReadTodosFile(t *testing.T) {
 	setupTestFilePath(t)
 
-	todos := []Todo{
+	todos := []*Todo{
 		{ID: uuid.New(), Title: "First todo", Description: "First description", Status: 0},
 		{ID: uuid.New(), Title: "Second todo", Description: "Second description", Status: 2},
 	}

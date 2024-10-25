@@ -51,7 +51,7 @@ func ReadTodosFile() ([]Todo, error) {
 
 // Save a slice of todo in the file.
 // Overwrites all the todos already present in the file.
-func SaveTodos(todos []Todo) error {
+func SaveTodos(todos []*Todo) error {
 	todosB, err := json.MarshalIndent(todos, "", "    ")
 	if err != nil {
 		return fmt.Errorf("failed to marshal todos: %w", err)
