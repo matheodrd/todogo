@@ -1,8 +1,10 @@
 package cmd
 
 import (
+	"log"
 	"os"
 
+	"github.com/matheodrd/todogo/todo"
 	"github.com/spf13/cobra"
 )
 
@@ -34,5 +36,8 @@ func init() {
 
 	// Cobra also supports local flags, which will only run
 	// when this action is called directly.
+	if err := todo.InitTodosFile(); err != nil {
+		log.Fatalf("Failed to init todos storage file: %v", err)
+	}
 	rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
