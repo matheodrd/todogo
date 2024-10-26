@@ -39,5 +39,9 @@ func init() {
 	if err := todo.InitTodosFile(); err != nil {
 		log.Fatalf("Failed to init todos storage file: %v", err)
 	}
+	if err := todo.InitCache(); err != nil {
+		log.Fatalf("Failed to init cache vars file: %v", err)
+	}
+
 	rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
