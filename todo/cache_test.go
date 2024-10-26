@@ -57,3 +57,36 @@ func TestLoadCache(t *testing.T) {
 		t.Errorf("want SelectedTodoID '%s', got '%s'", wantVars.SelectedTodoID, gotVars.SelectedTodoID)
 	}
 }
+
+func TestSetVar(t *testing.T) {
+	CacheFilePath := setupTempCache(t)
+
+	if err := InitCache(); err != nil {
+		t.Fatalf("Failed to initialize cache: %v", err)
+	}
+
+	wantID := "test-id"
+	if err := SetVar("SelectedTodoID", wantID); err != nil {
+		t.Fatalf("SetVar returned an error: %v", err)
+	}
+
+	var vars Vars
+
+	varsB, err := os.ReadFile(CacheFilePath)
+	if err != nil {
+		t.Fatalf("Failed to read cache file: %v", err)
+	}
+
+	if err := yaml.Unmarshal(varsB, &vars); err != nil {
+		t.Fatalf("Failed to unmarshal cache vars: %v", err)
+	}
+
+	if vars.SelectedTodoID != wantID {
+		t.Errorf("want SelectedTodoID '%s', got '%s'", wantID, vars.SelectedTodoID)
+	}
+
+	err = SetVar("UnknownKey", "some value")
+	if err == nil || err.Error() != "unknown variable name: UnknownKey" {
+		t.Errorf("want error for unknown variable, got: %v", err)
+	}
+}

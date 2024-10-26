@@ -78,3 +78,32 @@ func LoadCache() (Vars, error) {
 
 	return vars, nil
 }
+
+func SetVar(key, value string) error {
+	vars, err := LoadCache()
+	if err != nil {
+		return fmt.Errorf("failed to load cache: %w", err)
+	}
+
+	// could use reflection instead but meh...
+	if key == "SelectedTodoID" {
+		vars.SelectedTodoID = value
+	} else {
+		return fmt.Errorf("unknown variable name: %s", key)
+	}
+
+	return saveCache(vars)
+}
+
+func saveCache(vars Vars) error {
+	varsB, err := yaml.Marshal(&vars)
+	if err != nil {
+		return fmt.Errorf("failed to marshal cache vars: %w", err)
+	}
+
+	if err := os.WriteFile(CacheFilePath, varsB, 0644); err != nil {
+		return fmt.Errorf("failed to write to cache file: %w", err)
+	}
+
+	return nil
+}
