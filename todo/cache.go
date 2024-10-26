@@ -63,3 +63,18 @@ func InitCache() error {
 
 	return nil
 }
+
+func LoadCache() (Vars, error) {
+	var vars Vars
+
+	varsB, err := os.ReadFile(CacheFilePath)
+	if err != nil {
+		return vars, fmt.Errorf("failed to read cache file: %w", err)
+	}
+
+	if err := yaml.Unmarshal(varsB, &vars); err != nil {
+		return vars, fmt.Errorf("failed to unmarshal cache vars: %w", err)
+	}
+
+	return vars, nil
+}
