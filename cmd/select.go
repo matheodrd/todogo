@@ -28,7 +28,7 @@ following commands (update) will target the selected todo.`,
 
 		selectedTodo, err := todoList.FindTodo(id)
 		if err != nil {
-			log.Fatal(err)
+			log.Fatalf("Given ID doesn't exist: %v", err)
 		}
 
 		if err := todo.SetVar("SelectedTodoID", id.String()); err != nil {
