@@ -1,5 +1,5 @@
 ﻿build:
-	@go build -o bin/gotodo
+	@go build -o bin/todogo
 
 run: build
-	@./bin/gotodo
+	@./bin/todogo
