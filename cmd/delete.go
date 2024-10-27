@@ -9,6 +9,8 @@ import (
 	"github.com/spf13/cobra"
 )
 
+// TODO: Support stateful execution
+
 var deleteCmd = &cobra.Command{
 	Use:   "delete <id>",
 	Short: "Delete a todo",
