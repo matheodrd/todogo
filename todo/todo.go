@@ -16,7 +16,20 @@ const (
 )
 
 func (s status) String() string {
-	return [...]string{"to do", "doing", "done"}[s]
+	return [...]string{"todo", "doing", "done"}[s]
+}
+
+func ParseStatus(s string) (status, error) {
+	switch s {
+	case "todo":
+		return todo, nil
+	case "doing":
+		return doing, nil
+	case "done":
+		return done, nil
+	default:
+		return -1, fmt.Errorf("invalid status: %s", s)
+	}
 }
 
 type Todo struct {
